@@ -2,7 +2,7 @@ from flask import Flask,redirect,url_for,render_template,request,flash
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost/todo'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:5000/task_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
@@ -18,7 +18,6 @@ class Tasks(db.Model):
         self.title = title
         self.stack = stack
         self.mentors = mentors
-
 
 @app.route("/",methods=["POST","GET"])
 def home():
@@ -36,8 +35,8 @@ def home():
 @app.route("/tasks")
 def viewTasks():
     tasks = Tasks.query.order_by(Tasks.id).all()
-    return render_template("tasks.html",content = tasks)
+    return render_template("tasks.html",content = {'tasks':tasks,'count':len(tasks)})
 
 
 if __name__=="__main__":
-    app.run(debug=True,port=4999)
+    app.run(debug=True)

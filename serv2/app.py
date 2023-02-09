@@ -8,6 +8,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
 
+
 class Users(db.Model):
     id = db.Column("id",db.Integer, primary_key=True)
     u_name = db.Column("u_name",db.String(100))
@@ -25,6 +26,7 @@ class Tasks(db.Model):
         self.stack = stack
         self.mentors = mentors
 
+db.create_all()
 @app.route("/",methods=['GET','POST'])
 def register():
     if request.method == "POST":

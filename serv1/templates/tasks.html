@@ -9,12 +9,13 @@
             <th>MENTORS</th>
 
         </tr>
-        {% for item in content %}
+        {% for i in range(content['count'])%}
         <tr>
-            <td>{{item}}</td>
-            <td>{{item.title}}</td>
-            <td>{{item.stack}}</td>
-            <td>{{item.mentors}}</td>
+
+            <td>{{i+1}}</td>
+            <td>{{content['tasks'][i].title}}</td>
+            <td>{{content['tasks'][i].stack}}</td>
+            <td>{{content['tasks'][i].mentors}}</td>
         </tr>
         {% endfor %}
     </table>
