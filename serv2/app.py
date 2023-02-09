@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base,relationship
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost/todo'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3000/task_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.app_context().push()
