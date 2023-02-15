@@ -1,12 +1,17 @@
 from flask import Flask,redirect,url_for,render_template,request,flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base,relationship
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@192.168.52.125:3306/task_db'
+create_engine("mysql+pymysql://root:root@db/task_db", pool_recycle=60*5,pool_pre_ping=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db/task_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
+app.config['SQLALCHEMY_POOL_TIMEOUT'] = 600
 db = SQLAlchemy(app)
 app.app_context().push()
+
 
 
 class Users(db.Model):
@@ -46,4 +51,4 @@ def assignedTasks(usr):
 
 
 if __name__=="__main__":
-    app.run(debug=True,port=5001)
+    app.run(debug=True)
