@@ -4,11 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base,relationship
 app = Flask(__name__)
 
-create_engine("mysql+pymysql://root:root@db/task_db", pool_recycle=60*5,pool_pre_ping=True)
+engine = create_engine('mysql+pymysql://root:root@db/task_db', pool_timeout=20, pool_recycle=299)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db/task_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
-app.config['SQLALCHEMY_POOL_TIMEOUT'] = 600
 db = SQLAlchemy(app)
 app.app_context().push()
 
@@ -39,6 +38,7 @@ def register():
         user = Users(name=uname)
         db.session.add(user)
         db.session.commit()
+        
         return redirect(url_for("assignedTasks",usr=user.id))
     else:
         return render_template('register.html')
